@@ -10,20 +10,14 @@ nameRows=[]
 row=[]
 str2="_"
 url='http://www.oldclassiccar.co.uk/forum/phpbb/phpBB2/viewtopic.php?t=12591&postdays=0&postorder=asc&start='
-
-def writeToFile:
-       os.chdir(Location)
-       with open("forum.csv", "w") as toWrite:
-          writer = csv.writer(toWrite, delimiter=",")
-          writer.writerow(["number","name", "date", "post"])
-          for a in range(0,9):
-              for b in range(0,nameRows[a]):
-               writer.writerow([Bigdata[a][b][0],Bigdata[a][b][1],Bigdata[a][b][3].encode("utf-8"),Bigdata[a][b][2].encode("utf-8")])
-
-
-for d in range(0,9):
+def insertData(data,namesAndNumbers,index):
+       data[index][0]= namesAndNumbers[index].a["name"]
+       data[index][1]=namesAndNumbers[index].get_text()
+       return data
+def goThroughPages(url,d,:
        pages=page*d
        url=url+str(pages)
+       for d in range(0,9):
        storage = StringIO()
        c = pycurl.Curl()
        c.setopt(c.URL, url)
@@ -39,8 +33,7 @@ for d in range(0,9):
        dates= soup.find_all("span",class_="postdetails")
        data=[[0 for i in range(4)] for j in range(len(namesAndNumbers))] 
        for i in range(0,len(namesAndNumbers)):
-              data[i][0]= namesAndNumbers[i].a["name"]
-              data[i][1]=namesAndNumbers[i].get_text()
+              insertData(data)   
        j=0
        for i in range(0,len(namesAndNumbers)):
               if len(row)==83:
@@ -68,3 +61,16 @@ for d in range(0,9):
        for i in range(0,len(dates)/2):
              data[i][3]=dates[1+2*i].get_text()[0:34]
        Bigdata.append(data)
+       writeToFile(nameRows,Bigdata)
+def writeToFile(nameRows,Bigdata):
+       os.chdir(Location)
+       with open("forum.csv", "w") as toWrite:
+          writer = csv.writer(toWrite, delimiter=",")
+          writer.writerow(["number","name", "date", "post"])
+          for a in range(0,9):
+              for b in range(0,nameRows[a]):
+               writer.writerow([Bigdata[a][b][0],Bigdata[a][b][1],Bigdata[a][b][3].encode("utf-8"),Bigdata[a][b][2].encode("utf-8")])
+
+
+
+       
