@@ -9,8 +9,19 @@ Bigdata=[]
 nameRows=[]
 row=[]
 str2="_"
+url='http://www.oldclassiccar.co.uk/forum/phpbb/phpBB2/viewtopic.php?t=12591&postdays=0&postorder=asc&start='
+
+def writeToFile:
+       os.chdir(Location)
+       with open("forum.csv", "w") as toWrite:
+          writer = csv.writer(toWrite, delimiter=",")
+          writer.writerow(["number","name", "date", "post"])
+          for a in range(0,9):
+              for b in range(0,nameRows[a]):
+               writer.writerow([Bigdata[a][b][0],Bigdata[a][b][1],Bigdata[a][b][3].encode("utf-8"),Bigdata[a][b][2].encode("utf-8")])
+
+
 for d in range(0,9):
-       url='http://www.oldclassiccar.co.uk/forum/phpbb/phpBB2/viewtopic.php?t=12591&postdays=0&postorder=asc&start='
        pages=page*d
        url=url+str(pages)
        storage = StringIO()
@@ -57,11 +68,3 @@ for d in range(0,9):
        for i in range(0,len(dates)/2):
              data[i][3]=dates[1+2*i].get_text()[0:34]
        Bigdata.append(data)
-os.chdir(Location)
-with open("forum.csv", "w") as toWrite:
-    writer = csv.writer(toWrite, delimiter=",")
-    writer.writerow(["number","name", "date", "post"])
-    for a in range(0,9):
-        for b in range(0,nameRows[a]):
-               writer.writerow([Bigdata[a][b][0],Bigdata[a][b][1],Bigdata[a][b][3].encode("utf-8"),Bigdata[a][b][2].encode("utf-8")])
-
