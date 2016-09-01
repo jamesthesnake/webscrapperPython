@@ -9,6 +9,7 @@ Bigdata=[]
 nameRows=[]
 row=[]
 str2="_"
+#redo
 url='http://www.oldclassiccar.co.uk/forum/phpbb/phpBB2/viewtopic.php?t=12591&postdays=0&postorder=asc&start='
 def insertData(data,namesAndNumbers,index):
        data[index][0]= namesAndNumbers[index].a["name"]
